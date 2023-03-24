@@ -6,23 +6,28 @@ var confirmSymbol;
 var confirmUpperLetter;
 var confirmlowerLetter;
 var resultPassword = [];
+var passwordOptions = [];
+//All the arrays that the user can have access to to generate a random password
 symbols = ["@", "!", "#", "$", "%", "^", "&", "*", " ?"];
 lowerLetters = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
 upperLetters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
 numbers = ["0","1","2","3","4","5","6","7","8","9",];
 
+//creates a random order for all the arrays together
 function getRandom(arr) {
   var randomIndex = Math.floor(Math.random() * arr.length)
   var randomElement = arr[randomIndex];
   return randomElement
 }
 
+//Starting off with requring a certain lengthn
 function getPasswordOptions() { 
   var length = parseInt(prompt("How long would you like your password? 8-128"));
   if (!length|| length < 8 || length > 128) {
     alert("Enter valid number between 8-128!")
-    return null
+    return null; //will not progress further without proper numerical length
   } 
+  //If entered valid length confirm will ask which criteria user would like
   // add confirm here 4 (Tutor notes)
     confirmNumber = confirm("Would you like numbers in your password?");
     confirmSymbol = confirm("Would you like symbols in your password?");
@@ -30,7 +35,7 @@ function getPasswordOptions() {
     confirmlowerLetter = confirm("Would you like lowercase letters in your password?");
     if (!confirmSymbol && !confirmNumber && !confirmUpperLetter && !confirmlowerLetter) {
       alert ("Please try again")
-      return null;
+      return null; //If no criteria is selected no password will be generated
     }
     var passwordOptions = {
       length: length,
@@ -41,7 +46,6 @@ function getPasswordOptions() {
     };
   return passwordOptions;
 }
-// All 4 selected
 
 function generatePassword () {
   var options = getPasswordOptions();
@@ -61,57 +65,58 @@ function generatePassword () {
     passwordCritera= passwordCritera.concat(upperLetters);
     guranteedChar.push(getRandom(upperLetters))
   }
-  if (option.confirmlowerLetter){
+  if (options.confirmlowerLetter){
     passwordCritera=passwordCritera.concat(lowerLetters);
     guranteedChar.push(getRandom(lowerLetters))
   }
+  //If all 4 options are selected
   if (confirmSymbol && confirmNumber && confirmUpperLetter && confirmlowerLetter) {
     option = guranteedChar.push(symbols, lowerLetters, upperLetters, numbers);
   }
 // 3/4 options selected
   if (confirmSymbol && confirmNumber && confirmUpperLetter) {
-    option = guranteedChar.push(symbols, numbers, upperLetters)
+    options = guranteedChar.push(symbols, numbers, upperLetters)
   }
   if (confirmSymbol && confirmNumber && confirmlowerLetter) {
-    option = guranteedChar.push(symbols, numbers, lowerLetters)
+    options = guranteedChar.push(symbols, numbers, lowerLetters)
   }
   if (confirmSymbol && confirmUpperLetter && confirmlowerLetter) {
-    option = guranteedChar.push(symbols, upperLetters, lowerLetters)
+    options = guranteedChar.push(symbols, upperLetters, lowerLetters)
   }
   if (confirmNumber && confirmUpperLetter && confirmlowerLetter) {
-    option = guranteedChar.push(numbers, upperLetters, lowerLetters)
+    options = guranteedChar.push(numbers, upperLetters, lowerLetters)
   }
 // 2/4 options selected
   if (confirmSymbol && confirmNumber) {
-    option = guranteedChar.push(symbols, numbers)
+    options = guranteedChar.push(symbols, numbers)
   }
   if (confirmSymbol && confirmUpperLetter) {
-    option = guranteedChar.push(symbols, upperLetters)
+    options = guranteedChar.push(symbols, upperLetters)
   }
   if (confirmSymbol && confirmlowerLetter) {
-    option = guranteedChar.push(symbols && lowerLetters)
+    options = guranteedChar.push(symbols && lowerLetters)
   }
   if (confirmNumber && confirmUpperLetter) {
-    option = guranteedChar.push(numbers, upperLetters)
+    options = guranteedChar.push(numbers, upperLetters)
   }
   if (confirmNumber && confirmlowerLetter) {
-    option = guranteedChar.push(numbers, lowerLetters)
+    options = guranteedChar.push(numbers, lowerLetters)
   }
   if (confirmUpperLetter && confirmlowerLetter) {
-    option = guranteedChar.push(upperLetters && lowerLetters)
+    options = guranteedChar.push(upperLetters && lowerLetters)
   }
 // 1/4 options selected
   if (confirmSymbol) {
-    option = guranteedChar.push(symbols)
+    options = guranteedChar.push(symbols)
   }
   if (confirmNumber) {
-    option = guranteedChar.push(numbers)
+    options = guranteedChar.push(numbers)
   }
   if (confirmUpperLetter) {
-    option = guranteedChar.push(upperLetters)
+    options = guranteedChar.push(upperLetters)
   }
   if (confirmlowerLetter) {
-    option = guranteedChar.push(lowerLetters)
+    options = guranteedChar.push(lowerLetters)
   }
 };
   var password = resultPassword + passwordOptions;
@@ -120,15 +125,13 @@ function generatePassword () {
   }
   var possibleChar = ""
   for (var i =0; i < length; i++) {
-    var pickvariables = option[Math.floor(Math.random() * option.length)];
+    var pickvariables = option[Math.floor(Math.random() * options.length)];
     password.push(pickvariables);
-    var option = password.join("") 
+    var options = password.join("");
   }
 
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
-
-
 
 // Write password to the #password input
 function writePassword() {

@@ -12,7 +12,10 @@ This site is designed to generate a random password with the critera requested b
 ## Credits 
 Starter Code obtained from: https://github.com/coding-boot-camp/friendly-parakeet 
 
-Assistance: Tutor Faran Navazi 
+### Assistance: 
+- Tutor: Faran Navazi (Helped get me started)
+- Teaching Assistant: Shihan Zhang (Helped debug and find flaws in my code)
+
 
 ## Deployment 
 - Deployed URl: 
